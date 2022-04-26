@@ -1,0 +1,138 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""user"""
+type UserEntity {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  avatar: String!
+  createdAt: String!
+  updatedAt: String!
+  access_token: String!
+}
+
+"""article"""
+type ArticleEntity {
+  id: ID!
+  title: String!
+  text: String!
+  img: String!
+  user: UserEntity
+  categories: [CategoryEntity!]!
+  watchCount: Int!
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""category"""
+type CategoryEntity {
+  id: ID!
+  name: String!
+  articles: [ArticleEntity!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""comment"""
+type CommentEntity {
+  id: ID!
+  text: String!
+  user: UserEntity
+  article: ArticleEntity
+  createdAt: String!
+  likesCount: Int!
+  updatedAt: String!
+  parentId: Int
+}
+
+"""subscriber"""
+type SubscriberEntity {
+  id: ID!
+  onWhomId: Int!
+  user: UserEntity
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""bookmark"""
+type BookmarkEntity {
+  id: ID!
+  user: UserEntity
+  article: ArticleEntity
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  findAllUsers: [UserEntity!]!
+  findUser(id: Float!): UserEntity!
+  getProfile: UserEntity!
+  findAllArticles: [ArticleEntity!]!
+  findArticle(id: Int!): ArticleEntity!
+  findAllComments(id: Int!): [CommentEntity!]!
+  findAllSubscribersForUser(id: Int!): [SubscriberEntity!]!
+  findAllBookmarksForUser(userId: Int!): [BookmarkEntity!]!
+}
+
+type Mutation {
+  registerUser(registerUserInput: RegisterUserInput!): UserEntity!
+  login(loginUserInput: LoginUserInput!): UserEntity!
+  createArticle(createArticleInput: CreateArticleInput!): ArticleEntity!
+  updateArticle(updateArticleInput: UpdateArticleInput!, id: Int!): ArticleEntity!
+  removeArticle(id: Int!): ArticleEntity!
+  createComment(createCommentInput: CreateCommentInput!): CommentEntity!
+  updateComment(updateCommentInput: UpdateCommentInput!, id: Int!): CommentEntity!
+  removeComment(id: Int!): CommentEntity!
+  plusLikeForComment(commentId: Int!): Int!
+  munisLikeForComment(commentId: Int!): Int!
+  createSubscriber(createSubscriberInput: CreateSubscriberInput!): SubscriberEntity!
+  removeSubscriber(onWhomId: Int!): SubscriberEntity!
+  subscriptionCheck(onWhomId: Int!): Boolean!
+  createBookmark(createBookmarkInput: CreateBookmarkInput!): BookmarkEntity!
+  removeBookmark(articleId: Int!): BookmarkEntity!
+  checkBookmark(articleId: Int!): Boolean!
+}
+
+input RegisterUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input CreateArticleInput {
+  title: String!
+  text: String!
+  categories: [String!]!
+}
+
+input UpdateArticleInput {
+  title: String!
+  text: String!
+  img: String
+}
+
+input CreateCommentInput {
+  text: String!
+  articleId: Int!
+  parentId: Int
+}
+
+input UpdateCommentInput {
+  text: String!
+}
+
+input CreateSubscriberInput {
+  onWhomId: Int!
+}
+
+input CreateBookmarkInput {
+  articleId: Int!
+}
